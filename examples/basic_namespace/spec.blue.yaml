@@ -1,0 +1,18 @@
+meta:
+  namespace: blue_
+
+nodes:
+  - name: blue_R1
+    image: slankdev/ubuntu:18.04
+    interfaces:
+      - { name: net0, type: direct, args: blue_R2#net0 }
+    entry_commands:
+      - ip addr add 20.0.0.1/24 dev net0
+      - ip link set net0 up
+  - name: blue_R2
+    image: slankdev/ubuntu:18.04
+    interfaces:
+      - { name: net0, type: direct, args: blue_R1#net0 }
+    entry_commands:
+      - ip addr add 20.0.0.2/24 dev net0
+      - ip link set net0 up
